@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.cluster import Birch
+from sklearn.cluster import KMeans
 from time import time
 from memory_profiler import profile
 
@@ -19,17 +19,17 @@ for rowIndex in range(0, len(startData)):
 
 clusters = 20
 t0 = time()
-model = Birch(branching_factor=100, n_clusters=clusters, threshold=0.5)
+model = KMeans(n_clusters=clusters, n_init=100)
 
 
 @profile
-def training_birch():
+def training_kmeans():
     model.fit(trainingData)
     lb = model.labels_
     return lb
 
 
-labels = training_birch()
+labels = training_kmeans()
 t1 = time()
 
 countsCluster = {item: 0 for item in range(0, clusters)}

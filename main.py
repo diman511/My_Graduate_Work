@@ -1,6 +1,8 @@
 import CLOPE as cl
 import numpy
 import pandas as pd
+from memory_profiler import profile
+from time import time
 
 
 def get_count_clusters(data, clope):
@@ -29,7 +31,7 @@ mushroomsStart = [item.replace('\n', '').split(',') for item in f.readlines()]
 seed = 40
 numpy.random.seed(seed)
 numpy.random.shuffle(mushroomsStart)
-# print(mushroomsStart)
+
 mushrooms = {}
 miss_count = 0
 for rowIndex in range(0, len(mushroomsStart)):
@@ -45,30 +47,30 @@ for rowIndex in range(0, len(mushroomsStart)):
         else:
             mushrooms[rowIndex] = [''] * 22
 
-print('Общее число пропущенных объектов:', miss_count)
+# print('Общее число пропущенных объектов:', miss_count)
 
-# print(mushrooms)
-clope = cl.CLOPE(print_step=1000, is_save_history=True, random_seed=seed)
+
 # Начальные данные
-repulsion = 2.4
+repulsion = 3
 noiseLimit = 0
+t0 = time()
+clope = cl.CLOPE(print_step=1000, is_save_history=True, random_seed=seed)
 # Инициализируем алгоритм
-clope.init_clusters(mushrooms, repulsion, noiseLimit)
-df = get_count_clusters(mushroomsStart, clope)
-# result = open('data/result.clope.txt', 'w')
-print(df[0])
-print('Edible: ', df[1], 'Poisonous: ', df[2])
 
-# for i in range(25):
-#     result.write(df[0][i] + '\n')
-# result.write('Edible: ' + df[1] + 'Poisonous: ' + df[2])
 
-clope.print_history_count(repulsion, seed)
-# Итерируемся
-while clope.next_step(mushrooms, repulsion, noiseLimit) > 0:
-    clope.print_history_count(repulsion, seed)
+@profile
+def training_clope():
+    clope.init_clusters(mushrooms, repulsion, noiseLimit)
+    # df = get_count_clusters(mushroomsStart, clope)
+    # print(df[0])
+    while clope.next_step(mushrooms, repulsion, noiseLimit) > 0:
+        pass
+# clope.print_history_count(repulsion, seed)
 
-# pf = get_count_clusters(mushroomsStart, clope)
-# print(pf[0])
-# print('Edible: ', pf[1], 'Poisonous: ', pf[2])
+
+training_clope()
+pf = get_count_clusters(mushroomsStart, clope)
+print(pf[0])
+t1 = time()
+print('Время работы алгоритма: ', t1 - t0)
 
