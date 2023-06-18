@@ -17,15 +17,15 @@ for rowIndex in range(0, len(startData)):
         else:
             trainingData[rowIndex] = [''] * 22
 
-clusters = 20
+clusters = 22
 t0 = time()
-model = Birch(branching_factor=100, n_clusters=clusters, threshold=0.5)
 
 
 @profile
 def training_birch():
-    model.fit(trainingData)
-    lb = model.labels_
+    birch = Birch(branching_factor=80, n_clusters=clusters, threshold=3)
+    birch.fit(trainingData)
+    lb = birch.labels_
     return lb
 
 
@@ -56,6 +56,6 @@ for i in range(clusters):
     poisonous += clustersCount[i]['p']
 
 df = pd.DataFrame(clustersCount)
-print(df)
+# print(df)
 print('Время работы алгоритма: ', t1 - t0)
 # print('Edible: ', edible, 'Poisonous: ', poisonous)

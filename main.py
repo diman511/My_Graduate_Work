@@ -51,26 +51,26 @@ for rowIndex in range(0, len(mushroomsStart)):
 
 
 # Начальные данные
-repulsion = 3
+repulsion = 2.7
 noiseLimit = 0
 t0 = time()
-clope = cl.CLOPE(print_step=1000, is_save_history=True, random_seed=seed)
 # Инициализируем алгоритм
-
 
 @profile
 def training_clope():
+    clope = cl.CLOPE(print_step=1000, is_save_history=False, random_seed=seed)
     clope.init_clusters(mushrooms, repulsion, noiseLimit)
-    # df = get_count_clusters(mushroomsStart, clope)
-    # print(df[0])
+    df = get_count_clusters(mushroomsStart, clope)
     while clope.next_step(mushrooms, repulsion, noiseLimit) > 0:
         pass
+    return(df[0])
 # clope.print_history_count(repulsion, seed)
 
 
-training_clope()
-pf = get_count_clusters(mushroomsStart, clope)
-print(pf[0])
+df = training_clope()
+# print(df)
+# pf = get_count_clusters(mushroomsStart, clope)
+# print(pf[0])
 t1 = time()
 print('Время работы алгоритма: ', t1 - t0)
 

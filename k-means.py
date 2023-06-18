@@ -17,13 +17,13 @@ for rowIndex in range(0, len(startData)):
         else:
             trainingData[rowIndex] = [''] * 22
 
-clusters = 20
+clusters = 100
 t0 = time()
-model = KMeans(n_clusters=clusters, n_init=100)
 
 
 @profile
 def training_kmeans():
+    model = KMeans(n_clusters=clusters, n_init=50, algorithm='auto')
     model.fit(trainingData)
     lb = model.labels_
     return lb
@@ -56,6 +56,6 @@ for i in range(clusters):
     poisonous += clustersCount[i]['p']
 
 df = pd.DataFrame(clustersCount)
-print(df)
+# print(df)
 print('Время работы алгоритма: ', t1 - t0)
 # print('Edible: ', edible, 'Poisonous: ', poisonous)
