@@ -8,45 +8,47 @@ from gensim.models import Phrases
 import string
 from nltk.stem import WordNetLemmatizer
 
-lemmatizer = WordNetLemmatizer()
+# lemmatizer = WordNetLemmatizer()
+
 
 patterns = "[0-9!#$%&'()*+,./:;<=>?@[\]«»^_`{|}~�""\-]+"
-f = open('D:/Учеба/Датасеты/20_newsgroups/alt.atheism/51060', 'r')
-# df = pd.read_csv('D:/Учеба/Датасеты/20_newsgroups/alt.atheism/51060', sep='\0', encoding='cp1251')
-texts = []
-for item in f.readlines():
-    for elem in item:
-        if elem in patterns:
-            test_str = item.replace(elem, "")
-    texts.append(test_str.translate(str.maketrans('', '', string.punctuation)))
+# f = open('D:/Учеба/Датасеты/20_newsgroups/alt.atheism/51060', 'r')
+# # df = pd.read_csv('D:/Учеба/Датасеты/20_newsgroups/alt.atheism/51060', sep='\0', encoding='cp1251')
+# texts = []
+# for item in f.readlines():
+#     for elem in item:
+#         if elem in patterns:
+#             test_str = item.replace(elem, "")
+#     texts.append(test_str.translate(str.maketrans('', '', string.punctuation)))
+#
+# # print(texts)
+# texts2 = [[]]
+# for item in texts:
+#     texts2.append(item.replace('\n', '').split(' '))
+#
+# # print(texts2)
+#
+# stopwords_en = stopwords.words('english')
+# stopwords_en.extend(['xref', 'cantaloupe', 'srv', 'cs' 'cmu', 'mathew', 'europa', 'path', 'alt', ''])
+# texts3 = [[]]
+# for i in range(len(texts2)):
+#     test = []
+#     for j in range(len(texts2[i])):
+#         if texts2[i][j] not in stopwords_en:
+#             test.append(lemmatizer.lemmatize(texts2[i][j]))
+#     texts3.append(test)
+#
+# texts4 = []
+# for i in range(len(texts3)):
+#     if i != 0:
+#         if i != len(texts3)-1:
+#             if texts3[i] != texts3[i+1]:
+#                 if texts3[i] != texts3[i-1]:
+#                     texts4.append(texts3[i])
 
-# print(texts)
-texts2 = [[]]
-for item in texts:
-    texts2.append(item.replace('\n', '').split(' '))
 
-# print(texts2)
-
-stopwords_en = stopwords.words('english')
-stopwords_en.extend(['xref', 'cantaloupe', 'srv', 'cs' 'cmu', 'mathew', 'europa', 'path', 'alt', ''])
-texts3 = [[]]
-for i in range(len(texts2)):
-    test = []
-    for j in range(len(texts2[i])):
-        if texts2[i][j] not in stopwords_en:
-            test.append(lemmatizer.lemmatize(texts2[i][j]))
-    texts3.append(test)
-
-texts4 = []
-for i in range(len(texts3)):
-    if i != 0:
-        if i != len(texts3)-1:
-            if texts3[i] != texts3[i+1]:
-                if texts3[i] != texts3[i-1]:
-                    texts4.append(texts3[i])
-
-for i in range(len(texts4)):
-    print(texts4[i])
+# for i in range(len(texts4)):
+    # print(texts4[i])
 #
 # morph = pymorphy2.MorphAnalyzer()
 #
@@ -80,10 +82,10 @@ for i in range(len(texts4)):
 # for idx in range(len(text_clean)):
 #     for token in bigram[text_clean[idx]]:
 #         if '_' in token:
-#             text_clean[idx].append(token) # Токен это биграмма? добавим в документ.
+#             text_clean[idx].append(token)
 #     for token in trigram[text_clean[idx]]:
 #         if '_' in token:
-#             text_clean[idx].append(token) # Токен это триграмма? добавим в документ.
+#             text_clean[idx].append(token)
 #
 # id2word = corpora.Dictionary(data_ready)
 # corpus = [id2word.doc2bow(text) for text in data_ready]
