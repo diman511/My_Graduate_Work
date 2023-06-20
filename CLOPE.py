@@ -67,7 +67,6 @@ class CLOPE:
         return new_delta_value - old_delta_value
 
     def noise_reduction(self, limit):
-        # Удаляем все пустые и зашумлённые кластеры
         new_clusters = {}
         for item in self.clusters:
             if self.clusters[item].count_transactions > limit:
@@ -80,12 +79,10 @@ class CLOPE:
         measure = 0.0
         for item in self.clusters:
             if item.width == 0:
-                # print "test"
                 pass
             else:
                 measure += item.area / (item.width ** r) * item.count_transactions / self.count_transactions
         return measure
-
 
     def move_transaction(self, transaction, id, repulsion=2, max_count_clusters=None):
         r = repulsion
